@@ -35,17 +35,17 @@ void loop() {
   
   Serial.print("Humidty (%): ");
   Serial.println(humidity, 2);
-  checkLed(humidity, 20.0, pinLedHumd);
+  checkLed(humidity, 50.0, pinLedHumd);
   
   Serial.print("Temperature (graus Celsius): ");
   Serial.println(temp, 2);
-  checkLed(temp, 20.0, pinLedTemp);
+  checkLed(20.0, temp, pinLedTemp);
   
   delay(2000);
 }
 
-void checkLed(float meter, float limit, int pin){
-  if (meter > limit){
+void checkLed(float param1, float param2, int pin){
+  if (param1 > param2){
     digitalWrite(pin,HIGH);
     delay(1000);
     digitalWrite(pin,LOW);
