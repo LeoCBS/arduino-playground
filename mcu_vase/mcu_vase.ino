@@ -5,23 +5,34 @@ const char* ssid = "arboreo";
 const char* password = "cogumelo";
 const char* host = "192.168.0.105";
 String postPath = "/garden/v1/parameter";
-const int sleepTime30Min = 1800000;
 
 #define pinHumidity A0
 #define DHTTYPE DHT11
 
 // DHT Sensor
-const int pinDHT = 5;
+const int pinDHT = 4;
 // Initialize DHT sensor.
 DHT dht(pinDHT, DHTTYPE);
 
 void setup() {
   Serial.begin(115200);
-  delay(1000);
+  delay(20000);
 
   dht.begin();
   pinMode(pinHumidity, INPUT);
 
+  connectWifi();
+
+  postHumiditySoil();
+  postHumidityAir();
+  postTempAir();
+
+  Serial.println("ESP8266 in sleep mode");
+  ESP.deepSleep(30 * 60 * 1000000);
+
+}
+
+void connectWifi(){
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
@@ -34,12 +45,6 @@ void setup() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-
-  postHumiditySoil();
-
-  Serial.println("ESP8266 in sleep mode");
-  ESP.deepSleep(20 * 60 * 1000000);
-
 }
 
 void loop() {
@@ -57,7 +62,7 @@ void postHumidityAir(){
 void postTempAir(){
   delay(5000);
   float temp = dht.readTemperature();
-  String pubString = "{\"name\": \"tempAir\", \"value\": "+ String(temp) + ", \"measure\": \"percent\"}";
+  String pubString = "{\"name\": \"tempAir\", \"value\": "+ String(temp) + ", \"measure\": \"celsius\"}";
   String pubStringLength = String(pubString.length(), DEC);
   post(pubString, pubStringLength);
 }
