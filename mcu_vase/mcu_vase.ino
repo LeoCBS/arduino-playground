@@ -2,7 +2,7 @@
 #include "DHT.h"
 
 const char* ssid = "arboreo";
-const char* password = "cogumelo";
+const char* password = "password";
 const char* host = "192.168.0.105";
 String postPath = "/garden/v1/parameter";
 
@@ -28,7 +28,7 @@ void setup() {
   postTempAir();
 
   Serial.println("ESP8266 in sleep mode");
-  ESP.deepSleep(30 * 60 * 1000000);
+  ESP.deepSleep(120 * 60 * 1000000);
 
 }
 
