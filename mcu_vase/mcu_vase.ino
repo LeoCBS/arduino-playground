@@ -2,9 +2,9 @@
 #include "DHT.h"
 
 const char* ssid = "arboreo";
-const char* password = "password";
+const char* password = "cogumelo";
 const char* host = "192.168.0.105";
-String postPath = "/garden/v1/parameter";
+String postPath = "/garden/v1/parameter/save";
 
 #define pinHumidity A0
 #define DHTTYPE DHT11
@@ -28,7 +28,8 @@ void setup() {
   postTempAir();
 
   Serial.println("ESP8266 in sleep mode");
-  ESP.deepSleep(120 * 60 * 1000000);
+  // first number is hour param
+  ESP.deepSleep(12 * 60 * 60000);
 
 }
 
